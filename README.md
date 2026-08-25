@@ -233,6 +233,16 @@ This reduced the model size by more than **150×** while maintaining very simila
 
 ---
 
+## Live Demo:
+https://city-ai-pulse-lahore.vercel.app/
+
+Backend API:
+https://citypulse-lahore-api.vercel.app/api
+
+API Health:
+https://citypulse-lahore-api.vercel.app/api/health
+
+
 ## 🏗️ System Architecture
 
 ```text
