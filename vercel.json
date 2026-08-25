@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "fastapi",
   "functions": {
     "api/index.py": {
       "includeFiles": "{models/citypulse_multilocation_model.joblib,data/processed/citypulse_multilocation_latest_features.csv,data/processed/lahore_multilocation_station_candidates.csv}",
