@@ -1,0 +1,47 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "step": 7,
+  "input_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_time_features.csv",
+  "output_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_lag_features.csv",
+  "rows": 10388,
+  "lag_hours": [
+    1,
+    2,
+    3,
+    6,
+    12,
+    24
+  ],
+  "lag_availability": {
+    "pm25_lag_1h": {
+      "available": 9271,
+      "missing": 1117
+    },
+    "pm25_lag_2h": {
+      "available": 9270,
+      "missing": 1118
+    },
+    "pm25_lag_3h": {
+      "available": 9269,
+      "missing": 1119
+    },
+    "pm25_lag_6h": {
+      "available": 9266,
+      "missing": 1122
+    },
+    "pm25_lag_12h": {
+      "available": 9260,
+      "missing": 1128
+    },
+    "pm25_lag_24h": {
+      "available": 9248,
+      "missing": 1140
+    }
+  },
+  "methodology": {
+    "timeline_frequency": "1 hour",
+    "future_data_used": false,
+    "pm25_interpolated": false
+  }
+}

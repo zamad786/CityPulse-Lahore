@@ -1,0 +1,39 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 3,
+  "step": 6,
+  "metric": "RMSE",
+  "direction": "lower_is_better",
+  "dataset": "validation",
+  "leader": {
+    "model": "RandomForestRegressor",
+    "rmse": 9.561036826950165
+  },
+  "ranking": [
+    {
+      "rank": 1,
+      "model": "RandomForestRegressor",
+      "rmse": 9.561036826950165,
+      "training_time_seconds": 5.278594800009159
+    },
+    {
+      "rank": 2,
+      "model": "XGBRegressor",
+      "rmse": 9.859846072821693,
+      "training_time_seconds": 1.414958800014574
+    },
+    {
+      "rank": 3,
+      "model": "GradientBoostingRegressor",
+      "rmse": 9.965251704493456,
+      "training_time_seconds": 12.337135800014948
+    },
+    {
+      "rank": 4,
+      "model": "LinearRegression",
+      "rmse": 10.121348651467697,
+      "training_time_seconds": 0.2742984000069555
+    }
+  ],
+  "test_set_used": false
+}

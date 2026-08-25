@@ -1,0 +1,31 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "status": "PASS",
+  "forecast_target": "PM2.5(t + 1 hour)",
+  "dataset": {
+    "rows": 7451,
+    "feature_count": 21,
+    "missing_feature_target_values": 0
+  },
+  "splits": {
+    "train": 5215,
+    "validation": 1117,
+    "test": 1119
+  },
+  "validation": {
+    "duplicate_sample_ids": 0,
+    "duplicate_feature_timestamps": 0,
+    "duplicate_target_timestamps": 0,
+    "invalid_forecast_horizon_rows": 0,
+    "train_before_validation": true,
+    "validation_before_test": true
+  },
+  "files": {
+    "ml_dataset": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_ml_dataset.csv",
+    "train": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\splits\\citypulse_train.csv",
+    "validation": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\splits\\citypulse_validation.csv",
+    "test": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\splits\\citypulse_test.csv",
+    "feature_manifest": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\reports\\day2_feature_columns.json"
+  }
+}

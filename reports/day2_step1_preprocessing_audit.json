@@ -1,0 +1,66 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "step": 1,
+  "purpose": "Preprocessing audit before modifying data",
+  "input_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_aq_weather_merged.csv",
+  "dataset": {
+    "rows": 9272,
+    "columns": 20,
+    "start_timestamp_utc": "2025-06-16 10:00:00+00:00",
+    "end_timestamp_utc": "2026-08-23 05:00:00+00:00",
+    "expected_calendar_hours": 10388,
+    "observed_hours": 9272,
+    "missing_hours": 1116,
+    "coverage_percent": 89.26
+  },
+  "duplicates": {
+    "exact_rows": 0,
+    "duplicate_timestamps": 0
+  },
+  "pm25": {
+    "missing": 0,
+    "negative": 0,
+    "zero": 2,
+    "minimum": 0.0,
+    "median": 59.4,
+    "maximum": 735.0,
+    "iqr_review_lower": -130.5,
+    "iqr_review_upper": 321.5,
+    "iqr_review_count": 669
+  },
+  "quality": {
+    "flagged_openaq_rows": 0,
+    "numeric_conversion_failures": {
+      "pm25_ug_m3": 0,
+      "temperature_c": 0,
+      "relative_humidity_pct": 0,
+      "precipitation_mm": 0,
+      "wind_speed_m_s": 0,
+      "wind_direction_deg": 0,
+      "surface_pressure_hpa": 0
+    },
+    "weather_validity": {
+      "humidity_below_0": 0,
+      "humidity_above_100": 0,
+      "negative_precipitation": 0,
+      "negative_wind_speed": 0,
+      "wind_direction_outside_0_360": 0
+    }
+  },
+  "temporal_gaps": {
+    "number_of_gaps": 97,
+    "longest_gap_hours": 156,
+    "longest_continuous_segment_hours": 2099
+  },
+  "metadata_unique_counts": {
+    "station_name": 1,
+    "openaq_location_id": 1,
+    "openaq_sensor_id": 1,
+    "station_latitude": 1,
+    "station_longitude": 1,
+    "weather_grid_latitude": 1,
+    "weather_grid_longitude": 1
+  },
+  "data_modified": false
+}

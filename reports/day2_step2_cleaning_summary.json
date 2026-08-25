@@ -1,0 +1,51 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "step": 2,
+  "input_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_aq_weather_merged.csv",
+  "output_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_cleaned.csv",
+  "rows": {
+    "original": 9272,
+    "final": 9272,
+    "removed": 0
+  },
+  "cleaning": {
+    "exact_duplicates_removed": 0,
+    "invalid_timestamps": 0,
+    "duplicate_timestamps": 0,
+    "numeric_conversion_failures": {
+      "pm25_ug_m3": 0,
+      "temperature_c": 0,
+      "relative_humidity_pct": 0,
+      "precipitation_mm": 0,
+      "wind_speed_m_s": 0,
+      "wind_direction_deg": 0,
+      "surface_pressure_hpa": 0
+    }
+  },
+  "pm25": {
+    "negative_values": 0,
+    "zero_values_retained": 2,
+    "iqr_review_values_retained": 669,
+    "iqr_review_lower": -130.5,
+    "iqr_review_upper": 321.5
+  },
+  "openaq_flagged_rows": 0,
+  "weather_checks": {
+    "humidity_below_0": 0,
+    "humidity_above_100": 0,
+    "negative_precipitation": 0,
+    "negative_wind_speed": 0,
+    "invalid_wind_direction": 0
+  },
+  "temporal_gaps": {
+    "missing_hours": 1116,
+    "pm25_interpolated": false,
+    "pm25_forward_filled": false
+  },
+  "policy": {
+    "zero_pm25": "retained_pending_evidence",
+    "iqr_outliers": "retained_not_assumed_invalid",
+    "temporal_gaps": "retained_no_pm25_imputation"
+  }
+}

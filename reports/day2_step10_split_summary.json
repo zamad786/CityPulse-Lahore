@@ -1,0 +1,71 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "step": 10,
+  "forecast_target": "PM2.5(t + 1 hour)",
+  "rows": {
+    "timeline_input": 10388,
+    "complete_ml_samples": 7451,
+    "excluded_incomplete": 2937
+  },
+  "split": {
+    "method": "chronological_no_shuffle",
+    "requested_ratio": {
+      "train": 0.7,
+      "validation": 0.15,
+      "test": 0.15
+    },
+    "actual_counts": {
+      "train": 5215,
+      "validation": 1117,
+      "test": 1119
+    },
+    "train": {
+      "feature_start": "2025-06-17 10:00:00+00:00",
+      "feature_end": "2026-05-18 14:00:00+00:00",
+      "target_start": "2025-06-17 11:00:00+00:00",
+      "target_end": "2026-05-18 15:00:00+00:00"
+    },
+    "validation": {
+      "feature_start": "2026-05-18 15:00:00+00:00",
+      "feature_end": "2026-07-05 07:00:00+00:00",
+      "target_start": "2026-05-18 16:00:00+00:00",
+      "target_end": "2026-07-05 08:00:00+00:00"
+    },
+    "test": {
+      "feature_start": "2026-07-05 08:00:00+00:00",
+      "feature_end": "2026-08-23 04:00:00+00:00",
+      "target_start": "2026-07-05 09:00:00+00:00",
+      "target_end": "2026-08-23 05:00:00+00:00"
+    }
+  },
+  "feature_columns": [
+    "pm25_ug_m3",
+    "pm25_lag_1h",
+    "pm25_lag_2h",
+    "pm25_lag_3h",
+    "pm25_lag_6h",
+    "pm25_lag_12h",
+    "pm25_lag_24h",
+    "pm25_rolling_mean_3h",
+    "pm25_rolling_mean_6h",
+    "pm25_rolling_mean_12h",
+    "pm25_rolling_mean_24h",
+    "temperature_c",
+    "relative_humidity_pct",
+    "precipitation_mm",
+    "wind_speed_m_s",
+    "wind_direction_deg",
+    "surface_pressure_hpa",
+    "hour",
+    "day_of_week",
+    "month",
+    "is_weekend"
+  ],
+  "target_column": "target_pm25_1h",
+  "methodology": {
+    "random_shuffle": false,
+    "future_target_used_as_feature": false,
+    "target_horizon_hours": 1
+  }
+}

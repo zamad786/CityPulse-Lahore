@@ -1,0 +1,26 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "step": 5,
+  "rows": 10388,
+  "pm25": {
+    "observed": 9272,
+    "missing": 1116,
+    "mean": 111.13264224547025,
+    "median": 59.4,
+    "minimum": 0.0,
+    "maximum": 735.0
+  },
+  "strongest_pm25_correlations": {
+    "temperature_c": -0.7266009643262544,
+    "surface_pressure_hpa": 0.6656321122125197,
+    "wind_speed_m_s": -0.376001996017269,
+    "relative_humidity_pct": 0.30656154406211167,
+    "month": 0.2342945684813806,
+    "wind_direction_deg": 0.16500181388142332,
+    "hour": -0.14523760852100984,
+    "precipitation_mm": -0.09286953185891461,
+    "is_weekend": 0.016584222449949768,
+    "day_of_week": 0.004918870566427577
+  }
+}

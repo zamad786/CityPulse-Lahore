@@ -1,0 +1,41 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 3,
+  "step": 1,
+  "model": "LinearRegression",
+  "target": "PM2.5(t + 1 hour)",
+  "feature_count": 21,
+  "rows": {
+    "train": 5215,
+    "validation": 1117
+  },
+  "validation_metrics": {
+    "mae": 6.354672910107296,
+    "rmse": 10.121348651467697,
+    "r2": 0.7823514985467794
+  },
+  "training_time_seconds": 0.2742984000069555,
+  "feature_columns": [
+    "pm25_ug_m3",
+    "pm25_lag_1h",
+    "pm25_lag_2h",
+    "pm25_lag_3h",
+    "pm25_lag_6h",
+    "pm25_lag_12h",
+    "pm25_lag_24h",
+    "pm25_rolling_mean_3h",
+    "pm25_rolling_mean_6h",
+    "pm25_rolling_mean_12h",
+    "pm25_rolling_mean_24h",
+    "temperature_c",
+    "relative_humidity_pct",
+    "precipitation_mm",
+    "wind_speed_m_s",
+    "wind_direction_deg",
+    "surface_pressure_hpa",
+    "hour",
+    "day_of_week",
+    "month",
+    "is_weekend"
+  ]
+}

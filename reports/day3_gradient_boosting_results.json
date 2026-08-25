@@ -1,0 +1,48 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 3,
+  "step": 3,
+  "model": "GradientBoostingRegressor",
+  "target": "PM2.5(t + 1 hour)",
+  "parameters": {
+    "n_estimators": 300,
+    "learning_rate": 0.05,
+    "max_depth": 3,
+    "min_samples_leaf": 3,
+    "subsample": 0.9,
+    "random_state": 42
+  },
+  "rows": {
+    "train": 5215,
+    "validation": 1117
+  },
+  "validation_metrics": {
+    "mae": 6.4053589859223905,
+    "rmse": 9.965251704493456,
+    "r2": 0.7890131170597126
+  },
+  "training_time_seconds": 12.337135800014948,
+  "feature_importance": {
+    "pm25_ug_m3": 0.9639804870280333,
+    "hour": 0.008890095109937698,
+    "pm25_lag_24h": 0.007100950421581008,
+    "pm25_rolling_mean_24h": 0.005113127691154279,
+    "pm25_lag_1h": 0.003302118976213901,
+    "temperature_c": 0.001455324093501506,
+    "pm25_lag_3h": 0.0014469684728952304,
+    "wind_speed_m_s": 0.001242270057478587,
+    "relative_humidity_pct": 0.0011181028375753148,
+    "surface_pressure_hpa": 0.0010959657231885353,
+    "pm25_lag_2h": 0.000958288854719017,
+    "pm25_rolling_mean_12h": 0.0009553720732146632,
+    "pm25_rolling_mean_3h": 0.0006509528576263807,
+    "pm25_lag_12h": 0.0006427444761540053,
+    "wind_direction_deg": 0.0005732473951584469,
+    "pm25_lag_6h": 0.0005608054323574435,
+    "pm25_rolling_mean_6h": 0.00043623604421867305,
+    "month": 0.00029083199436035666,
+    "day_of_week": 0.00011411147399620827,
+    "precipitation_mm": 5.405404171202061e-05,
+    "is_weekend": 1.7944944923459116e-05
+  }
+}

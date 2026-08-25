@@ -1,0 +1,68 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 3,
+  "step": 8,
+  "selection_dataset": "validation",
+  "selected_model": "RandomForestRegressor",
+  "selected_validation_metrics": {
+    "mae": 6.038210566754232,
+    "rmse": 9.561036826950165,
+    "r2": 0.8057822615652422,
+    "training_time_seconds": 5.278594800009159
+  },
+  "selection_method": {
+    "primary": "MAE + RMSE + R2 rank",
+    "secondary": "training time"
+  },
+  "test_set_used_for_selection": false,
+  "ranking": [
+    {
+      "overall_rank": 1,
+      "model": "RandomForestRegressor",
+      "mae": 6.038210566754232,
+      "rmse": 9.561036826950165,
+      "r2": 0.8057822615652422,
+      "training_time_seconds": 5.278594800009159,
+      "mae_rank": 1,
+      "rmse_rank": 1,
+      "r2_rank": 1,
+      "accuracy_rank_sum": 3
+    },
+    {
+      "overall_rank": 2,
+      "model": "XGBRegressor",
+      "mae": 6.350198333180153,
+      "rmse": 9.859846072821693,
+      "r2": 0.7934528624382791,
+      "training_time_seconds": 1.414958800014574,
+      "mae_rank": 2,
+      "rmse_rank": 2,
+      "r2_rank": 2,
+      "accuracy_rank_sum": 6
+    },
+    {
+      "overall_rank": 3,
+      "model": "GradientBoostingRegressor",
+      "mae": 6.4053589859223905,
+      "rmse": 9.965251704493456,
+      "r2": 0.7890131170597126,
+      "training_time_seconds": 12.337135800014948,
+      "mae_rank": 4,
+      "rmse_rank": 3,
+      "r2_rank": 3,
+      "accuracy_rank_sum": 10
+    },
+    {
+      "overall_rank": 4,
+      "model": "LinearRegression",
+      "mae": 6.354672910107296,
+      "rmse": 10.121348651467697,
+      "r2": 0.7823514985467794,
+      "training_time_seconds": 0.2742984000069555,
+      "mae_rank": 3,
+      "rmse_rank": 4,
+      "r2_rank": 4,
+      "accuracy_rank_sum": 11
+    }
+  ]
+}

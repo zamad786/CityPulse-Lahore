@@ -1,0 +1,203 @@
+{
+  "project": "CityPulse Lahore",
+  "phase": "Day 1 — Data Foundation",
+  "validation_status": "PASS",
+  "source_files": {
+    "air_quality": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\raw\\openaq_fcc_pm25_hourly.csv",
+    "weather": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\raw\\openmeteo_fcc_weather_hourly.csv",
+    "weather_metadata": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\raw\\openmeteo_fcc_weather_metadata.json"
+  },
+  "combined_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_aq_weather_merged.csv",
+  "dataset": {
+    "rows": 9272,
+    "columns": 21,
+    "start_timestamp_utc": "2025-06-16 10:00:00+00:00",
+    "end_timestamp_utc": "2026-08-23 05:00:00+00:00",
+    "expected_calendar_hours": 10388,
+    "observed_pm25_hours": 9272,
+    "missing_pm25_hours": 1116,
+    "timestamp_coverage_percent": 89.26
+  },
+  "checks": [
+    {
+      "name": "File exists: openaq_fcc_pm25_hourly.csv",
+      "passed": true,
+      "details": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\raw\\openaq_fcc_pm25_hourly.csv"
+    },
+    {
+      "name": "File exists: openmeteo_fcc_weather_hourly.csv",
+      "passed": true,
+      "details": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\raw\\openmeteo_fcc_weather_hourly.csv"
+    },
+    {
+      "name": "File exists: openmeteo_fcc_weather_metadata.json",
+      "passed": true,
+      "details": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\raw\\openmeteo_fcc_weather_metadata.json"
+    },
+    {
+      "name": "File exists: citypulse_aq_weather_merged.csv",
+      "passed": true,
+      "details": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_aq_weather_merged.csv"
+    },
+    {
+      "name": "All expected columns are present",
+      "passed": true,
+      "details": "Missing: none"
+    },
+    {
+      "name": "No unexpected columns are present",
+      "passed": true,
+      "details": "Unexpected: none"
+    },
+    {
+      "name": "All merged timestamps parse successfully",
+      "passed": true,
+      "details": "Invalid timestamps: 0"
+    },
+    {
+      "name": "Merged timestamps are unique",
+      "passed": true,
+      "details": "Duplicate timestamps: 0"
+    },
+    {
+      "name": "Merged dataset is chronologically sorted",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Merged row count equals observed AQ row count",
+      "passed": true,
+      "details": "AQ=9,272, merged=9,272"
+    },
+    {
+      "name": "Merged timestamps exactly equal AQ timestamps",
+      "passed": true,
+      "details": "AQ unique=9,272, merged unique=9,272"
+    },
+    {
+      "name": "Every merged PM2.5 value matches raw OpenAQ",
+      "passed": true,
+      "details": "Changed values=0, missing source matches=0"
+    },
+    {
+      "name": "temperature_c matches raw Open-Meteo",
+      "passed": true,
+      "details": "Changed=0, missing source matches=0"
+    },
+    {
+      "name": "relative_humidity_pct matches raw Open-Meteo",
+      "passed": true,
+      "details": "Changed=0, missing source matches=0"
+    },
+    {
+      "name": "precipitation_mm matches raw Open-Meteo",
+      "passed": true,
+      "details": "Changed=0, missing source matches=0"
+    },
+    {
+      "name": "wind_speed_m_s matches raw Open-Meteo",
+      "passed": true,
+      "details": "Changed=0, missing source matches=0"
+    },
+    {
+      "name": "wind_direction_deg matches raw Open-Meteo",
+      "passed": true,
+      "details": "Changed=0, missing source matches=0"
+    },
+    {
+      "name": "surface_pressure_hpa matches raw Open-Meteo",
+      "passed": true,
+      "details": "Changed=0, missing source matches=0"
+    },
+    {
+      "name": "No missing values: timestamp_utc",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "No missing values: pm25_ug_m3",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "No missing values: temperature_c",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "No missing values: relative_humidity_pct",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "No missing values: precipitation_mm",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "No missing values: wind_speed_m_s",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "No missing values: wind_direction_deg",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "No missing values: surface_pressure_hpa",
+      "passed": true,
+      "details": "Missing=0"
+    },
+    {
+      "name": "PM2.5 contains no negative values",
+      "passed": true,
+      "details": "Negative values=0"
+    },
+    {
+      "name": "Humidity is within 0–100%",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Precipitation contains no negative values",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Wind speed contains no negative values",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Wind direction is within 0–360°",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "No synthetic PM2.5 timestamps were introduced",
+      "passed": true,
+      "details": "Observed combined hours=9,272; raw AQ timestamps=9,272"
+    },
+    {
+      "name": "Station latitude matches requested Open-Meteo location",
+      "passed": true,
+      "details": "31.521146"
+    },
+    {
+      "name": "Station longitude matches requested Open-Meteo location",
+      "passed": true,
+      "details": "74.333954"
+    },
+    {
+      "name": "Weather grid latitude matches metadata",
+      "passed": true,
+      "details": "31.528997"
+    },
+    {
+      "name": "Weather grid longitude matches metadata",
+      "passed": true,
+      "details": "74.282295"
+    }
+  ]
+}

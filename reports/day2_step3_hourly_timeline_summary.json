@@ -1,0 +1,32 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "step": 3,
+  "input_cleaned_dataset": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_cleaned.csv",
+  "input_weather_dataset": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\raw\\openmeteo_fcc_weather_hourly.csv",
+  "output_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_hourly_timeline.csv",
+  "timeline": {
+    "start_timestamp_utc": "2025-06-16 10:00:00+00:00",
+    "end_timestamp_utc": "2026-08-23 05:00:00+00:00",
+    "total_calendar_hours": 10388,
+    "observed_pm25_hours": 9272,
+    "missing_pm25_hours": 1116,
+    "duplicate_timestamps": 0,
+    "non_hourly_intervals": 0
+  },
+  "weather_missing": {
+    "temperature_c": 0,
+    "relative_humidity_pct": 0,
+    "precipitation_mm": 0,
+    "wind_speed_m_s": 0,
+    "wind_direction_deg": 0,
+    "surface_pressure_hpa": 0
+  },
+  "methodology": {
+    "frequency": "1 hour",
+    "pm25_interpolated": false,
+    "pm25_forward_filled": false,
+    "weather_complete": true,
+    "purpose": "Ensure future lag and target features represent actual clock hours"
+  }
+}

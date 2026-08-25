@@ -1,0 +1,62 @@
+{
+  "generated_at_utc": "2026-08-25T10:18:21.146507+00:00",
+  "status": "PASS",
+  "original_model_size_mb": 620.3696660995483,
+  "compact_model_size_mb": 4.069263458251953,
+  "selected_configuration": {
+    "name": "compact_rf_40_d14",
+    "n_estimators": 40,
+    "max_depth": 14,
+    "min_samples_leaf": 2,
+    "max_features": 0.8
+  },
+  "candidate_validation_results": [
+    {
+      "name": "compact_rf_80_d18",
+      "n_estimators": 80,
+      "max_depth": 18,
+      "min_samples_leaf": 2,
+      "max_features": 0.8,
+      "validation_mae": 8.685570452097686,
+      "validation_rmse": 15.937167240604566,
+      "validation_r2": 0.8143280073515811,
+      "compressed_validation_model_mb": 15.001029968261719,
+      "training_seconds": 14.373810299999604,
+      "passes_quality": true
+    },
+    {
+      "name": "compact_rf_60_d16",
+      "n_estimators": 60,
+      "max_depth": 16,
+      "min_samples_leaf": 2,
+      "max_features": 0.8,
+      "validation_mae": 8.661491112162903,
+      "validation_rmse": 15.812684436634848,
+      "validation_r2": 0.8172171913524345,
+      "compressed_validation_model_mb": 8.833114624023438,
+      "training_seconds": 7.8368114000040805,
+      "passes_quality": true
+    },
+    {
+      "name": "compact_rf_40_d14",
+      "n_estimators": 40,
+      "max_depth": 14,
+      "min_samples_leaf": 2,
+      "max_features": 0.8,
+      "validation_mae": 8.678755975546322,
+      "validation_rmse": 15.937250575861114,
+      "validation_r2": 0.8143260655932545,
+      "compressed_validation_model_mb": 4.051567077636719,
+      "training_seconds": 5.453795200002787,
+      "passes_quality": true
+    }
+  ],
+  "compact_held_out_test_metrics": {
+    "mae": 6.952564265754262,
+    "rmse": 11.405891320033234,
+    "r2": 0.7872113263466236
+  },
+  "supported_station_count": 8,
+  "deployment_model": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\models\\citypulse_multilocation_model.joblib",
+  "full_reference_model": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\models\\citypulse_multilocation_model_full_reference.joblib"
+}

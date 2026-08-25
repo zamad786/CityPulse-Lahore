@@ -1,0 +1,53 @@
+{
+  "generated_at_utc": "2026-08-25T17:16:41.897407+00:00",
+  "overall_status": "PASS",
+  "supported_station_count": 8,
+  "station_predictions": {
+    "4515157": 91.9,
+    "4527035": 39.29,
+    "4757305": 57.18,
+    "4618814": 56.69,
+    "4609353": 53.9,
+    "4527173": 39.69,
+    "4568423": 48.23,
+    "4555745": 54.3
+  },
+  "checks": {
+    "HEALTH ENDPOINT": {
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    "LOCATIONS ENDPOINT": {
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    "SUPPORTED STATION COUNT": {
+      "passed": true,
+      "detail": "Expected 8, received 8"
+    },
+    "STATION METADATA": {
+      "passed": true,
+      "detail": ""
+    },
+    "ALL 8 LOCATION DASHBOARDS": {
+      "passed": true,
+      "detail": ""
+    },
+    "LOCATION-SPECIFIC PREDICTIONS": {
+      "passed": true,
+      "detail": "Predictions should differ across supported stations."
+    },
+    "NEAREST-STATION LOOKUP": {
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    "MODEL METRICS EXPOSED": {
+      "passed": true,
+      "detail": "{'mae': 6.952564265754262, 'rmse': 11.405891320033234, 'r2': 0.7872113263466236}"
+    },
+    "DEPLOYMENT FILES": {
+      "passed": true,
+      "detail": ""
+    }
+  }
+}

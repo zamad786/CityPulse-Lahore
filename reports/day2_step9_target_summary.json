@@ -1,0 +1,26 @@
+{
+  "project": "CityPulse Lahore",
+  "day": 2,
+  "step": 9,
+  "input_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_rolling_features.csv",
+  "output_file": "D:\\hackathon\\lahore citypulse\\CityPulse-Lahore\\data\\processed\\citypulse_feature_target_base.csv",
+  "forecast_target": {
+    "name": "target_pm25_1h",
+    "definition": "PM2.5(t + 1 hour)",
+    "horizon_hours": 1
+  },
+  "rows": {
+    "total": 10388,
+    "target_available": 9271,
+    "target_missing": 1117,
+    "complete_candidate_ml_rows": 7451,
+    "incomplete_candidate_ml_rows": 2937
+  },
+  "methodology": {
+    "timeline_frequency": "hourly",
+    "target_uses_exact_next_clock_hour": true,
+    "future_data_used_as_feature": false,
+    "pm25_interpolated": false,
+    "rows_dropped": false
+  }
+}

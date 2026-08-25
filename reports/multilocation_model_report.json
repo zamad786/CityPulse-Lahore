@@ -1,0 +1,163 @@
+{
+  "generated_at_utc": "2026-08-24T18:38:58.831957+00:00",
+  "status": "PASS",
+  "station_count": 8,
+  "stations": [
+    {
+      "location_id": 4515157,
+      "sensor_id": 13137726,
+      "name": "Barki, Lahore",
+      "latitude": 31.4591591,
+      "longitude": 74.5396309,
+      "provider": "AirGradient"
+    },
+    {
+      "location_id": 4527035,
+      "sensor_id": 13153587,
+      "name": "Civil Secretariat",
+      "latitude": 31.565942,
+      "longitude": 74.2993626,
+      "provider": "AirGradient"
+    },
+    {
+      "location_id": 4527173,
+      "sensor_id": 13154528,
+      "name": "Learning Alliance Intl. DHA",
+      "latitude": 31.525621,
+      "longitude": 74.436078,
+      "provider": "AirGradient"
+    },
+    {
+      "location_id": 4555745,
+      "sensor_id": 13183459,
+      "name": "Ravi Road",
+      "latitude": 31.602875,
+      "longitude": 74.300927,
+      "provider": "AirGradient"
+    },
+    {
+      "location_id": 4568423,
+      "sensor_id": 13192746,
+      "name": "Model Town",
+      "latitude": 31.491676,
+      "longitude": 74.313288,
+      "provider": "AirGradient"
+    },
+    {
+      "location_id": 4609353,
+      "sensor_id": 13230942,
+      "name": "Kahna Hospital ",
+      "latitude": 31.37102350243929,
+      "longitude": 74.36487268127355,
+      "provider": "AirGradient"
+    },
+    {
+      "location_id": 4618814,
+      "sensor_id": 13238783,
+      "name": "Gulberg III",
+      "latitude": 31.508051,
+      "longitude": 74.337544,
+      "provider": "AirGradient"
+    },
+    {
+      "location_id": 4757305,
+      "sensor_id": 13341452,
+      "name": "Forman Christian College & Chartered University",
+      "latitude": 31.521146,
+      "longitude": 74.333954,
+      "provider": "AirGradient"
+    }
+  ],
+  "common_time_range": {
+    "start": "2025-06-16T10:00:00+00:00",
+    "end": "2026-08-24T16:00:00+00:00"
+  },
+  "dataset": {
+    "timeline_rows": 83384,
+    "complete_ml_rows": 54727,
+    "feature_count": 31
+  },
+  "split": {
+    "train_rows": 37802,
+    "validation_rows": 7564,
+    "test_rows": 9361,
+    "train_end": "2026-04-21 06:00:00+00:00",
+    "validation_end": "2026-06-23 23:00:00+00:00"
+  },
+  "validation_metrics": {
+    "mae": 8.64047543928156,
+    "rmse": 15.778689962093173,
+    "r2": 0.8180022479927145
+  },
+  "held_out_test_metrics": {
+    "mae": 6.94467325624141,
+    "rmse": 11.354711530292652,
+    "r2": 0.7891166655679767
+  },
+  "station_test_metrics": [
+    {
+      "location_id": 4515157,
+      "location_name": "Barki, Lahore",
+      "test_samples": 1316,
+      "mae": 5.426307300682658,
+      "rmse": 8.404240877574711,
+      "r2": 0.8452297331399762
+    },
+    {
+      "location_id": 4527035,
+      "location_name": "Civil Secretariat",
+      "test_samples": 1229,
+      "mae": 7.227731640199656,
+      "rmse": 11.470933220626213,
+      "r2": 0.7601673844310053
+    },
+    {
+      "location_id": 4527173,
+      "location_name": "Learning Alliance Intl. DHA",
+      "test_samples": 1374,
+      "mae": 5.468435146957513,
+      "rmse": 8.238314749655524,
+      "r2": 0.8069591282895137
+    },
+    {
+      "location_id": 4555745,
+      "location_name": "Ravi Road",
+      "test_samples": 620,
+      "mae": 9.561690531577769,
+      "rmse": 15.675452200414256,
+      "r2": 0.6582944699470105
+    },
+    {
+      "location_id": 4568423,
+      "location_name": "Model Town",
+      "test_samples": 1100,
+      "mae": 6.983258396873075,
+      "rmse": 11.197093202128892,
+      "r2": 0.8036220101757794
+    },
+    {
+      "location_id": 4609353,
+      "location_name": "Kahna Hospital ",
+      "test_samples": 972,
+      "mae": 9.404998986559658,
+      "rmse": 14.400158723483843,
+      "r2": 0.7704049996240941
+    },
+    {
+      "location_id": 4618814,
+      "location_name": "Gulberg III",
+      "test_samples": 1325,
+      "mae": 6.812782189050013,
+      "rmse": 10.041503380294369,
+      "r2": 0.8040677864836878
+    },
+    {
+      "location_id": 4757305,
+      "location_name": "Forman Christian College & Chartered University",
+      "test_samples": 1425,
+      "mae": 6.802193743639728,
+      "rmse": 12.802716517972202,
+      "r2": 0.7337209439921204
+    }
+  ]
+}
