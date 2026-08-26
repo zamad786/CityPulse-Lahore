@@ -2,8 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "api/index.py": {
-      "includeFiles": "{models/citypulse_multilocation_model.joblib,data/processed/citypulse_multilocation_latest_features.csv,data/processed/lahore_multilocation_station_candidates.csv}",
-      "excludeFiles": "{frontend,notebooks,reports,screenshots,.vscode}/**"
+      "includeFiles": "{models/citypulse_multilocation_model_19station.joblib,data/processed/citypulse_19station_latest_features.csv}",
+      "excludeFiles": "{frontend,notebooks,reports,screenshots,.vscode,data/raw}/**"
     }
   }
 }
