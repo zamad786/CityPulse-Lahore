@@ -76,7 +76,7 @@ export function LocationSelector({
           <div className="mt-1 flex items-center gap-1.5 text-[10px] text-muted-foreground">
             <Radio className="size-3 text-primary" />
 
-            Real OpenAQ monitoring location
+            {locations.length} supported Lahore monitoring locations
           </div>
         </div>
       </div>
