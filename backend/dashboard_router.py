@@ -13,30 +13,48 @@ router = APIRouter(
 )
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+# =========================================================
+# PROJECT PATHS
+# =========================================================
+
+PROJECT_ROOT = (
+    Path(__file__)
+    .resolve()
+    .parents[1]
+)
+
 
 MODEL_PATH = (
     PROJECT_ROOT
     / "models"
-    / "citypulse_multilocation_model.joblib"
+    / "citypulse_multilocation_model_19station.joblib"
 )
+
 
 LATEST_FEATURES_PATH = (
     PROJECT_ROOT
     / "data"
     / "processed"
-    / "citypulse_multilocation_latest_features.csv"
+    / "citypulse_19station_latest_features.csv"
 )
 
 
 DEFAULT_LOCATION_ID = 4757305
 
+DEFAULT_COVERAGE_RADIUS_KM = 5.0
+
+
+# =========================================================
+# LOAD MODEL
+# =========================================================
 
 @lru_cache
 def load_model_bundle():
+
     if not MODEL_PATH.exists():
         raise FileNotFoundError(
-            f"Multi-location model not found: {MODEL_PATH}"
+            "19-station CityPulse model not found:\n"
+            f"{MODEL_PATH}"
         )
 
     return joblib.load(
@@ -44,11 +62,16 @@ def load_model_bundle():
     )
 
 
+# =========================================================
+# LOAD LATEST FEATURES
+# =========================================================
+
 @lru_cache
 def load_latest_features():
+
     if not LATEST_FEATURES_PATH.exists():
         raise FileNotFoundError(
-            f"Latest feature file not found: "
+            "19-station latest feature file not found:\n"
             f"{LATEST_FEATURES_PATH}"
         )
 
@@ -56,18 +79,30 @@ def load_latest_features():
         LATEST_FEATURES_PATH
     )
 
-    df["timestamp_utc"] = pd.to_datetime(
-        df["timestamp_utc"],
+    df[
+        "timestamp_utc"
+    ] = pd.to_datetime(
+        df[
+            "timestamp_utc"
+        ],
         utc=True,
     )
 
-    df["location_id"] = (
-        df["location_id"]
+    df[
+        "location_id"
+    ] = (
+        df[
+            "location_id"
+        ]
         .astype(int)
     )
 
-    df["sensor_id"] = (
-        df["sensor_id"]
+    df[
+        "sensor_id"
+    ] = (
+        df[
+            "sensor_id"
+        ]
         .astype(int)
     )
 
@@ -75,7 +110,43 @@ def load_latest_features():
 
 
 # =========================================================
-# RISK
+# COVERAGE
+# =========================================================
+
+def get_coverage_radius_km() -> float:
+
+    bundle = load_model_bundle()
+
+    radius = bundle.get(
+        "coverage_radius_km"
+    )
+
+    if radius is not None:
+        return float(
+            radius
+        )
+
+    spatial = (
+        bundle.get(
+            "spatial_coverage"
+        )
+        or {}
+    )
+
+    radius = spatial.get(
+        "coverage_radius_km"
+    )
+
+    if radius is not None:
+        return float(
+            radius
+        )
+
+    return DEFAULT_COVERAGE_RADIUS_KM
+
+
+# =========================================================
+# RISK INTELLIGENCE
 # =========================================================
 
 def classify_risk(
@@ -84,10 +155,18 @@ def classify_risk(
 
     if pm25 <= 15:
         return {
-            "level": "Good",
-            "response_stage": "Prevention",
-            "aqi_reference_band": "0-50",
-            "severity": 1,
+            "level":
+                "Good",
+
+            "response_stage":
+                "Prevention",
+
+            "aqi_reference_band":
+                "0-50",
+
+            "severity":
+                1,
+
             "recommendation": (
                 "Air-quality conditions are within "
                 "the lowest PM2.5 risk band."
@@ -96,10 +175,18 @@ def classify_risk(
 
     if pm25 <= 35:
         return {
-            "level": "Satisfactory",
-            "response_stage": "Prevention",
-            "aqi_reference_band": "51-100",
-            "severity": 2,
+            "level":
+                "Satisfactory",
+
+            "response_stage":
+                "Prevention",
+
+            "aqi_reference_band":
+                "51-100",
+
+            "severity":
+                2,
+
             "recommendation": (
                 "Conditions remain relatively stable. "
                 "Continue routine monitoring."
@@ -108,35 +195,60 @@ def classify_risk(
 
     if pm25 <= 70:
         return {
-            "level": "Moderate",
-            "response_stage": "Preparedness",
-            "aqi_reference_band": "101-150",
-            "severity": 3,
+            "level":
+                "Moderate",
+
+            "response_stage":
+                "Preparedness",
+
+            "aqi_reference_band":
+                "101-150",
+
+            "severity":
+                3,
+
             "recommendation": (
-                "Sensitive citizens should monitor exposure "
-                "and consider limiting prolonged outdoor "
-                "exertion if they experience discomfort."
+                "Sensitive citizens should monitor "
+                "exposure and consider limiting "
+                "prolonged outdoor exertion if they "
+                "experience discomfort."
             ),
         }
 
     if pm25 <= 140:
         return {
-            "level": "Unhealthy for Sensitive Groups",
-            "response_stage": "Alert",
-            "aqi_reference_band": "151-200",
-            "severity": 4,
+            "level":
+                "Unhealthy for Sensitive Groups",
+
+            "response_stage":
+                "Alert",
+
+            "aqi_reference_band":
+                "151-200",
+
+            "severity":
+                4,
+
             "recommendation": (
-                "Sensitive groups should consider reducing "
-                "prolonged outdoor activity."
+                "Sensitive groups should consider "
+                "reducing prolonged outdoor activity."
             ),
         }
 
     if pm25 <= 250:
         return {
-            "level": "Unhealthy",
-            "response_stage": "Warning",
-            "aqi_reference_band": "201-300",
-            "severity": 5,
+            "level":
+                "Unhealthy",
+
+            "response_stage":
+                "Warning",
+
+            "aqi_reference_band":
+                "201-300",
+
+            "severity":
+                5,
+
             "recommendation": (
                 "Reduce unnecessary outdoor exposure "
                 "and continue monitoring local conditions."
@@ -145,10 +257,18 @@ def classify_risk(
 
     if pm25 <= 350:
         return {
-            "level": "Very Unhealthy",
-            "response_stage": "Emergency",
-            "aqi_reference_band": "301-400",
-            "severity": 6,
+            "level":
+                "Very Unhealthy",
+
+            "response_stage":
+                "Emergency",
+
+            "aqi_reference_band":
+                "301-400",
+
+            "severity":
+                6,
+
             "recommendation": (
                 "Very high pollution risk is predicted. "
                 "Strong exposure precautions are advised."
@@ -156,10 +276,18 @@ def classify_risk(
         }
 
     return {
-        "level": "Hazardous",
-        "response_stage": "Severe",
-        "aqi_reference_band": "401-500+",
-        "severity": 7,
+        "level":
+            "Hazardous",
+
+        "response_stage":
+            "Severe",
+
+        "aqi_reference_band":
+            "401-500+",
+
+        "severity":
+            7,
+
         "recommendation": (
             "Severe PM2.5 conditions are predicted. "
             "Minimize outdoor exposure where possible."
@@ -172,6 +300,7 @@ def classify_risk(
 # =========================================================
 
 def get_stations():
+
     bundle = load_model_bundle()
 
     raw_stations = bundle.get(
@@ -183,69 +312,137 @@ def get_stations():
 
     stations = []
 
+
     for raw_station in raw_stations:
+
         station = dict(
             raw_station
         )
 
-        sensor_id = int(
-            station["sensor_id"]
+        location_id = int(
+            station[
+                "location_id"
+            ]
         )
 
         matches = latest_df[
-            latest_df["sensor_id"]
-            == sensor_id
+            latest_df[
+                "location_id"
+            ]
+            == location_id
         ]
+
 
         if matches.empty:
             raise RuntimeError(
-                "Could not match supported sensor "
-                f"{sensor_id} to latest features."
+                "Could not match model station "
+                f"{location_id} to latest features."
             )
 
-        matched_row = matches.iloc[0]
 
-        # Always use the validated dataset ID.
-        # This also repairs Ravi Road metadata.
-        station["location_id"] = int(
-            matched_row["location_id"]
+        matched_row = (
+            matches
+            .sort_values(
+                "timestamp_utc"
+            )
+            .iloc[-1]
         )
 
-        station["sensor_id"] = sensor_id
 
-        station["latitude"] = float(
-            matched_row["latitude"]
+        timestamp = pd.Timestamp(
+            matched_row[
+                "timestamp_utc"
+            ]
         )
 
-        station["longitude"] = float(
-            matched_row["longitude"]
+        if timestamp.tzinfo is None:
+            timestamp = timestamp.tz_localize(
+                "UTC"
+            )
+        else:
+            timestamp = timestamp.tz_convert(
+                "UTC"
+            )
+
+
+        station[
+            "location_id"
+        ] = location_id
+
+        station[
+            "sensor_id"
+        ] = int(
+            matched_row[
+                "sensor_id"
+            ]
         )
+
+        station[
+            "name"
+        ] = str(
+            station[
+                "name"
+            ]
+        ).strip()
+
+        station[
+            "latitude"
+        ] = float(
+            matched_row[
+                "latitude"
+            ]
+        )
+
+        station[
+            "longitude"
+        ] = float(
+            matched_row[
+                "longitude"
+            ]
+        )
+
+        station[
+            "latest_timestamp_utc"
+        ] = timestamp.isoformat()
 
         stations.append(
             station
         )
 
+
     return sorted(
         stations,
-        key=lambda item: item["name"],
+        key=lambda item:
+            item[
+                "name"
+            ].lower(),
     )
 
 
 def get_station(
     location_id: int,
 ):
+
     for station in get_stations():
+
         if (
-            int(station["location_id"])
-            == location_id
+            int(
+                station[
+                    "location_id"
+                ]
+            )
+            == int(
+                location_id
+            )
         ):
             return station
+
 
     raise HTTPException(
         status_code=404,
         detail=(
             f"Location {location_id} is not supported "
-            "by the CityPulse model."
+            "by the CityPulse 19-station model."
         ),
     )
 
@@ -263,36 +460,60 @@ def haversine_km(
 
     radius_km = 6371.0088
 
-    phi1 = math.radians(lat1)
-    phi2 = math.radians(lat2)
+    phi1 = math.radians(
+        lat1
+    )
+
+    phi2 = math.radians(
+        lat2
+    )
 
     delta_phi = math.radians(
-        lat2 - lat1
+        lat2
+        - lat1
     )
 
     delta_lambda = math.radians(
-        lon2 - lon1
+        lon2
+        - lon1
     )
+
 
     a = (
         math.sin(
-            delta_phi / 2
-        ) ** 2
+            delta_phi
+            / 2
+        )
+        ** 2
         +
-        math.cos(phi1)
-        * math.cos(phi2)
+        math.cos(
+            phi1
+        )
+        * math.cos(
+            phi2
+        )
         * math.sin(
-            delta_lambda / 2
-        ) ** 2
+            delta_lambda
+            / 2
+        )
+        ** 2
     )
+
 
     c = 2 * math.atan2(
-        math.sqrt(a),
-        math.sqrt(1 - a),
+        math.sqrt(
+            a
+        ),
+        math.sqrt(
+            1
+            - a
+        ),
     )
 
+
     return (
-        radius_km * c
+        radius_km
+        * c
     )
 
 
@@ -303,9 +524,12 @@ def haversine_km(
 def build_dashboard(
     location_id: int,
 ):
+
     bundle = load_model_bundle()
 
-    model = bundle["model"]
+    model = bundle[
+        "model"
+    ]
 
     feature_columns = bundle[
         "feature_columns"
@@ -317,10 +541,16 @@ def build_dashboard(
 
     latest_df = load_latest_features()
 
+
     station_rows = latest_df[
-        latest_df["location_id"]
-        == location_id
+        latest_df[
+            "location_id"
+        ]
+        == int(
+            location_id
+        )
     ]
+
 
     if station_rows.empty:
         raise HTTPException(
@@ -331,6 +561,7 @@ def build_dashboard(
             ),
         )
 
+
     row = (
         station_rows
         .sort_values(
@@ -339,27 +570,39 @@ def build_dashboard(
         .iloc[-1]
     )
 
+
     missing_features = [
         feature
-        for feature in feature_columns
-        if feature not in row.index
+        for feature
+        in feature_columns
+        if feature
+        not in row.index
     ]
+
 
     if missing_features:
         raise HTTPException(
             status_code=500,
             detail=(
-                "Latest feature dataset missing: "
+                "Latest feature dataset is missing "
+                "required model features: "
                 + ", ".join(
                     missing_features
                 )
             ),
         )
 
+
     model_input = pd.DataFrame(
         [
             {
-                feature: row[feature]
+                feature:
+                    float(
+                        row[
+                            feature
+                        ]
+                    )
+
                 for feature
                 in feature_columns
             }
@@ -367,20 +610,26 @@ def build_dashboard(
         columns=feature_columns,
     )
 
+
     predicted_pm25 = float(
         model.predict(
             model_input
         )[0]
     )
 
+
     predicted_pm25 = max(
         0.0,
         predicted_pm25,
     )
 
+
     timestamp = pd.Timestamp(
-        row["timestamp_utc"]
+        row[
+            "timestamp_utc"
+        ]
     )
+
 
     if timestamp.tzinfo is None:
         timestamp = timestamp.tz_localize(
@@ -391,16 +640,33 @@ def build_dashboard(
             "UTC"
         )
 
+
+    forecast_horizon = int(
+        bundle.get(
+            "forecast_horizon_hours",
+            1,
+        )
+    )
+
+
     forecast_timestamp = (
         timestamp
         + pd.Timedelta(
-            hours=1
+            hours=
+                forecast_horizon
         )
     )
+
 
     risk = classify_risk(
         predicted_pm25
     )
+
+
+    coverage_radius = (
+        get_coverage_radius_km()
+    )
+
 
     return {
         "data_mode":
@@ -424,7 +690,7 @@ def build_dashboard(
             "name":
                 station[
                     "name"
-                ].strip(),
+                ],
 
             "latitude":
                 float(
@@ -443,6 +709,11 @@ def build_dashboard(
             "provider":
                 station.get(
                     "provider"
+                ),
+
+            "recent_coverage_pct":
+                station.get(
+                    "recent_coverage_pct"
                 ),
         },
 
@@ -502,9 +773,11 @@ def build_dashboard(
 
         "forecast": {
             "timestamp_utc":
-                forecast_timestamp.isoformat(),
+                forecast_timestamp
+                .isoformat(),
 
-            "horizon_hours": 1,
+            "horizon_hours":
+                forecast_horizon,
 
             "predicted_pm25_ug_m3":
                 round(
@@ -521,7 +794,15 @@ def build_dashboard(
             "model_type":
                 bundle.get(
                     "model_type",
-                    "station-aware pooled model",
+                    (
+                        "compact 19-station "
+                        "station-aware pooled model"
+                    ),
+                ),
+
+            "deployment_profile":
+                bundle.get(
+                    "deployment_profile"
                 ),
         },
 
@@ -534,15 +815,35 @@ def build_dashboard(
                 {},
             ),
 
+        "coverage": {
+            "recommended_radius_km":
+                coverage_radius,
+
+            "station_count":
+                len(
+                    bundle.get(
+                        "stations",
+                        [],
+                    )
+                ),
+
+            "spatial_summary":
+                bundle.get(
+                    "spatial_coverage"
+                ),
+        },
+
         "scope_note": (
             "Location-specific forecast using the "
+            "latest prepared observation from the "
             "supported OpenAQ monitoring station "
-            f"'{station['name'].strip()}'."
+            f"'{station['name']}'."
         ),
 
         "regulatory_note": (
             "Forecast risk intelligence only. "
-            "This is not an official regulatory AQI reading."
+            "This is not an official regulatory "
+            "AQI reading."
         ),
     }
 
@@ -555,14 +856,27 @@ def build_dashboard(
     "/locations"
 )
 def locations():
+
     stations = get_stations()
+
+    bundle = load_model_bundle()
 
     return {
         "count":
-            len(stations),
+            len(
+                stations
+            ),
 
         "forecast_horizon_hours":
-            1,
+            int(
+                bundle.get(
+                    "forecast_horizon_hours",
+                    1,
+                )
+            ),
+
+        "coverage_radius_km":
+            get_coverage_radius_km(),
 
         "locations":
             stations,
@@ -574,10 +888,16 @@ def locations():
 )
 def dashboard_latest(
     location_id: int = Query(
-        default=DEFAULT_LOCATION_ID,
-        description="Supported OpenAQ location ID.",
+        default=
+            DEFAULT_LOCATION_ID,
+
+        description=(
+            "Supported OpenAQ "
+            "location ID."
+        ),
     ),
 ):
+
     return build_dashboard(
         location_id
     )
@@ -587,6 +907,7 @@ def dashboard_latest(
     "/dashboard/nearest"
 )
 def dashboard_nearest(
+
     lat: float = Query(
         ...,
         ge=-90,
@@ -599,7 +920,9 @@ def dashboard_nearest(
         le=180,
     ),
 ):
+
     stations = get_stations()
+
 
     if not stations:
         raise HTTPException(
@@ -609,10 +932,14 @@ def dashboard_nearest(
             ),
         )
 
+
     nearest_station = None
+
     nearest_distance = None
 
+
     for station in stations:
+
         distance = haversine_km(
             lat,
             lon,
@@ -628,13 +955,74 @@ def dashboard_nearest(
             ),
         )
 
+
         if (
             nearest_distance is None
             or distance
             < nearest_distance
         ):
+
             nearest_distance = distance
+
             nearest_station = station
+
+
+    if (
+        nearest_station is None
+        or nearest_distance is None
+    ):
+
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                "Unable to determine "
+                "nearest supported station."
+            ),
+        )
+
+
+    coverage_radius = (
+        get_coverage_radius_km()
+    )
+
+
+    within_supported_radius = (
+        nearest_distance
+        <= coverage_radius
+    )
+
+
+    if within_supported_radius:
+
+        coverage_status = (
+            "within_recommended_coverage"
+        )
+
+        coverage_note = (
+            "The selected point is within "
+            f"{coverage_radius:.1f} km of a "
+            "supported monitoring station. "
+            "CityPulse will use the nearest "
+            "station as the observation and "
+            "forecast reference."
+        )
+
+    else:
+
+        coverage_status = (
+            "outside_recommended_coverage"
+        )
+
+        coverage_note = (
+            "The selected point is more than "
+            f"{coverage_radius:.1f} km from the "
+            "nearest supported monitoring station. "
+            "The nearest station is shown for "
+            "reference, but the clicked point "
+            "should not be treated as having an "
+            "exact local measurement."
+        )
+
 
     return {
         "selected_point": {
@@ -654,6 +1042,20 @@ def dashboard_nearest(
                 2,
             ),
 
+        "coverage_radius_km":
+            coverage_radius,
+
+        "within_supported_radius":
+            within_supported_radius,
+
+        "coverage_status":
+            coverage_status,
+
+        # Kept for compatibility with the
+        # existing frontend.
         "coverage_mode":
             "nearest_supported_station",
+
+        "coverage_note":
+            coverage_note,
     }
