@@ -15,30 +15,31 @@ from pydantic import (
 )
 
 from backend.dashboard_router import (
-    router as dashboard_router,
+    DEFAULT_LOCATION_ID,
+    MODEL_PATH,
     build_dashboard,
+    get_coverage_radius_km,
     get_stations,
     load_model_bundle,
+    router as dashboard_router,
 )
-
-
-# =========================================================
-# CONSTANTS
-# =========================================================
-
-DEFAULT_LOCATION_ID = 4757305
 
 
 # =========================================================
 # REQUEST SCHEMA
 # =========================================================
 
-class PredictionRequest(BaseModel):
+class PredictionRequest(
+    BaseModel
+):
+
     location_id: int = Field(
-        default=DEFAULT_LOCATION_ID,
-        gt=0,
+        default=
+            DEFAULT_LOCATION_ID,
+
         description=(
-            "Supported OpenAQ Lahore location ID."
+            "Supported CityPulse "
+            "OpenAQ location ID."
         ),
     )
 
@@ -49,18 +50,16 @@ class PredictionRequest(BaseModel):
 
 app = FastAPI(
     title="CityPulse Lahore API",
+
     description=(
-        "AI-powered multi-location next-hour PM2.5 "
-        "prediction and urban air-quality "
+        "AI-powered next-hour PM2.5 prediction "
+        "and Lahore urban air-quality "
         "risk intelligence."
     ),
-    version="2.0.0",
+
+    version="1.1.0",
 )
 
-
-# =========================================================
-# DASHBOARD / MULTI-LOCATION ROUTES
-# =========================================================
 
 app.include_router(
     dashboard_router
@@ -90,10 +89,20 @@ allowed_origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+
+    allow_origins=
+        allowed_origins,
+
+    allow_credentials=
+        True,
+
+    allow_methods=[
+        "*"
+    ],
+
+    allow_headers=[
+        "*"
+    ],
 )
 
 
@@ -103,6 +112,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
+
     return {
         "service":
             "CityPulse Lahore API",
@@ -111,38 +121,30 @@ def root():
             "running",
 
         "version":
-            "2.0.0",
+            "1.1.0",
 
-        "architecture":
-            "multi-location station-aware forecasting",
+        "docs":
+            "/docs",
 
-        "endpoints": {
-            "health":
-                "/health",
+        "health":
+            "/health",
 
-            "locations":
-                "/locations",
+        "locations":
+            "/locations",
 
-            "dashboard":
-                "/dashboard/latest",
+        "dashboard":
+            "/dashboard/latest",
 
-            "nearest":
-                "/dashboard/nearest",
+        "nearest":
+            "/dashboard/nearest",
 
-            "predict":
-                "/predict",
-
-            "docs":
-                "/docs",
-        },
+        "predict":
+            "/predict",
     }
 
 
 # =========================================================
 # HEALTH
-#
-# Checks the CURRENT compact multi-location model,
-# not the removed legacy FCC-only model.
 # =========================================================
 
 @app.get(
@@ -151,6 +153,7 @@ def root():
 def health():
 
     try:
+
         bundle = (
             load_model_bundle()
         )
@@ -160,23 +163,13 @@ def health():
         )
 
 
-        model = bundle.get(
-            "model"
+        model_size_mb = (
+            MODEL_PATH
+            .stat()
+            .st_size
+            / 1024
+            / 1024
         )
-
-        feature_columns = bundle.get(
-            "feature_columns"
-        )
-
-
-        if (
-            model is None
-            or not feature_columns
-        ):
-            raise RuntimeError(
-                "Multi-location model bundle "
-                "is incomplete."
-            )
 
 
         return {
@@ -186,22 +179,25 @@ def health():
             "service":
                 "CityPulse Lahore API",
 
+            "version":
+                "1.1.0",
+
             "model_loaded":
                 True,
 
             "model_name":
                 bundle.get(
-                    "model_name",
-                    type(model).__name__,
+                    "model_name"
                 ),
 
             "model_type":
                 bundle.get(
-                    "model_type",
-                    (
-                        "station-aware "
-                        "multi-location model"
-                    ),
+                    "model_type"
+                ),
+
+            "deployment_profile":
+                bundle.get(
+                    "deployment_profile"
                 ),
 
             "forecast_horizon_hours":
@@ -212,15 +208,37 @@ def health():
                     )
                 ),
 
-            "supported_station_count":
+            "station_count":
                 len(
                     stations
                 ),
 
-            "deployment_profile":
+            "feature_count":
+                len(
+                    bundle.get(
+                        "feature_columns",
+                        [],
+                    )
+                ),
+
+            "coverage_radius_km":
+                get_coverage_radius_km(),
+
+            "model_size_mb":
+                round(
+                    model_size_mb,
+                    2,
+                ),
+
+            "held_out_test_metrics":
                 bundle.get(
-                    "deployment_profile",
-                    "multi-location",
+                    "held_out_test_metrics",
+                    {},
+                ),
+
+            "spatial_coverage":
+                bundle.get(
+                    "spatial_coverage"
                 ),
         }
 
@@ -234,20 +252,11 @@ def health():
             "service":
                 "CityPulse Lahore API",
 
+            "version":
+                "1.1.0",
+
             "model_loaded":
                 False,
-
-            "model_name":
-                None,
-
-            "model_type":
-                None,
-
-            "forecast_horizon_hours":
-                None,
-
-            "supported_station_count":
-                0,
 
             "error":
                 str(
@@ -257,17 +266,10 @@ def health():
 
 
 # =========================================================
-# PREDICT
+# PREDICTION
 #
-# The prediction endpoint now uses exactly the same
-# compact multi-location forecasting pipeline as the
-# dashboard.
-#
-# Example JSON:
-#
-# {
-#     "location_id": 4618814
-# }
+# Uses the selected station's latest prepared feature row.
+# The frontend does not send raw future-sensitive features.
 # =========================================================
 
 @app.post(
@@ -279,14 +281,9 @@ def predict(
 
     try:
 
-        result = (
-            build_dashboard(
-                payload.location_id
-            )
+        return build_dashboard(
+            payload.location_id
         )
-
-
-        return result
 
 
     except HTTPException:
