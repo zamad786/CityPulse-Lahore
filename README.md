@@ -30,7 +30,7 @@ The platform combines real air-quality observations, weather information, machin
 
 - Real PM2.5 observations from **OpenAQ**
 - Weather data from **Open-Meteo**
-- **8 supported Lahore monitoring locations**
+- **19 supported Lahore monitoring locations**
 - PM2.5 prediction **1 hour ahead**
 - Station-aware machine-learning model
 - Interactive Lahore map
@@ -41,6 +41,7 @@ The platform combines real air-quality observations, weather information, machin
 - FastAPI backend
 - React + TypeScript frontend
 - Responsive Smart City Command Centre UI
+- 5km Radius coverage area
 - Compact cloud-deployable ML model
 
 ---
